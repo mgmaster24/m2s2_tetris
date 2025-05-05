@@ -1,0 +1,8 @@
+[package]
+name = "tetris_game_logic"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+m2s2-math = { path = "../../m2s2-rust-math/m2s2-math" }
+rand = "0.9.1"

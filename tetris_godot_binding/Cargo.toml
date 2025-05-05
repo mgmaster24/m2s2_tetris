@@ -1,0 +1,8 @@
+[package]
+name = "tetris_godot_binding"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gdext = { version = "0.0.0", features = ["derive"] }
+tetris_game_logic = { path = "../tetris_game_logic" }
