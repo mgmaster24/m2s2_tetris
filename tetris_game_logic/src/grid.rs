@@ -41,6 +41,16 @@ impl Grid {
         self.height
     }
 
+    pub fn get_cell_data(&self) -> Vec<i32> {
+        let mut cell_data = Vec::new();
+        for cell in &self.cells {
+            cell_data.push(cell.block_type.into_i32());
+        }
+
+        cell_data
+    }
+
+    #[inline]
     fn xy_to_index(&self, x: usize, y: usize) -> Option<usize> {
         if x < self.width && y < self.height {
             Some(y * self.width + x)
@@ -80,6 +90,58 @@ impl Grid {
 
     pub fn is_coord_occupied(&self, coord: Vector2i32) -> bool {
         self.is_cell_occupied(coord[0], coord[1])
+    }
+
+    pub fn clear_lines(&mut self) -> u32 {
+        // Find lines to clear
+        let mut lines_to_clear = Vec::new();
+        for y in (0..self.height).rev() {
+            let mut row_is_full = true;
+            for x in 0..self.width {
+                if self
+                    .get_cell(x, y)
+                    .is_none_or(|cell| cell.block_type == BlockType::Empty)
+                {
+                    row_is_full = false;
+                    break;
+                }
+            }
+
+            if row_is_full {
+                lines_to_clear.push(y);
+            }
+        }
+
+        let num_lines_cleared = lines_to_clear.len() as u32;
+        if num_lines_cleared > 0 {
+            let mut new_cells: Vec<Cell> = vec![
+                Cell {
+                    block_type: BlockType::Empty
+                };
+                self.cells.len()
+            ];
+            let mut y_write = self.height - 1;
+            for y_read in (0..self.height).rev() {
+                if !lines_to_clear.contains(&y_read) {
+                    for x in 0..self.width {
+                        let old_idx = self.xy_to_index(x, y_read).unwrap();
+                        let new_idx = self.xy_to_index(x, y_write).unwrap();
+                        new_cells[new_idx] = self.cells[old_idx];
+                    }
+                    y_write -= 1
+                }
+            }
+
+            self.cells = new_cells;
+        }
+
+        num_lines_cleared
+    }
+
+    fn empty_cell(&mut self, idx: usize) {
+        self.cells[idx] = Cell {
+            block_type: BlockType::Empty,
+        };
     }
 }
 

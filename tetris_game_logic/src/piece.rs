@@ -13,6 +13,12 @@ pub enum BlockType {
     Empty,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RotationDirection {
+    Clockwise,
+    CounterClockwise,
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct PieceShapeTemplate {
     block_type: BlockType,
@@ -65,6 +71,13 @@ impl Piece {
         self.pos + self.template.pivot_offset
     }
 
+    pub fn calculate_next_rotation_state(&self, direction: RotationDirection) -> usize {
+        match direction {
+            RotationDirection::Clockwise => (self.rot_state + 1) % 4,
+            RotationDirection::CounterClockwise => (self.rot_state - 1) % 4,
+        }
+    }
+
     fn relative_block_positions_at_rotation(&self, rotation_state: usize) -> [Vector2i32; 4] {
         self.template.rotations[rotation_state]
     }
@@ -95,6 +108,19 @@ impl BlockType {
             5 => Some(BlockType::T),
             6 => Some(BlockType::Z),
             _ => None,
+        }
+    }
+
+    pub fn into_i32(self) -> i32 {
+        match self {
+            BlockType::Empty => 0,
+            BlockType::I => 1,
+            BlockType::J => 2,
+            BlockType::L => 3,
+            BlockType::O => 4,
+            BlockType::S => 5,
+            BlockType::T => 6,
+            BlockType::Z => 7,
         }
     }
 }

@@ -1,0 +1,4 @@
+res://scenes/node_2d.tscn
+res://scenes/tetris_view.gd
+res://scenes/tetris_scene_node_2d.tscn
+res://scripts/tetris_view.gd
