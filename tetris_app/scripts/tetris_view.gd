@@ -23,7 +23,7 @@ var block_colors = {
 func _ready() -> void:
 	rust_game_node = get_node("../TetrisGameNode")
 	if rust_game_node == null:
-		print("Error: TetrisGameWrapper not found!  Drawing will not work")
+		print("Error: TetrisGameNode not found!  Drawing will not work")
 		set_process(false)
 		return
 		
@@ -32,6 +32,7 @@ func _ready() -> void:
 	queue_redraw()
 	
 func _process(delta: float) -> void:
+	print(delta)
 	if rust_game_node != null:
 		rust_game_node.process(delta)
 	

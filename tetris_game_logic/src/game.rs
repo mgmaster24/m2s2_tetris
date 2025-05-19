@@ -31,8 +31,8 @@ pub struct Game {
     score: u32,
     level: u32,
     state: GameState,
-    gravity_timer: f32,
-    gravity_interval: f32,
+    gravity_timer: f64,
+    gravity_interval: f64,
     lines_cleared: u32,
 }
 
@@ -56,11 +56,11 @@ impl Game {
         &self.state
     }
 
-    pub fn grav_timer(&self) -> f32 {
+    pub fn grav_timer(&self) -> f64 {
         self.gravity_timer
     }
 
-    pub fn grav_int(&self) -> f32 {
+    pub fn grav_int(&self) -> f64 {
         self.gravity_interval
     }
 
@@ -204,9 +204,10 @@ impl Game {
         }
     }
 
-    pub fn update(&mut self, delta_time: f32) {
+    pub fn update(&mut self, delta_time: f64) -> bool {
         if self.state != GameState::Playing || self.current_piece.is_none() {
-            return;
+            println!("Current piece is none?");
+            return false;
         }
 
         self.gravity_timer += delta_time;
@@ -217,6 +218,7 @@ impl Game {
             }
         }
 
+        true
         // add logic for increasing level and speed
     }
 

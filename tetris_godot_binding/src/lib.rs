@@ -24,6 +24,13 @@ impl INode for TetrisGameNode {
         }
     }
 
+    fn ready(&mut self) {
+        let spawned = self.spawn_piece();
+        if !spawned {
+            godot_print!("Piece not spawned");
+        }
+    }
+
     fn process(&mut self, delta: f64) {
         self.process(delta);
     }
@@ -152,7 +159,10 @@ impl TetrisGameNode {
             self.game.grav_timer(),
             self.game.grav_int()
         );
-        self.game.update(delta as f32);
+        let was_updated = self.game.update(delta);
+        if !was_updated {
+            godot_print!("Not updated")
+        }
     }
 
     fn get_piece_block_type(&self, piece: &Piece) -> i32 {

@@ -74,7 +74,7 @@ impl Piece {
     pub fn calculate_next_rotation_state(&self, direction: RotationDirection) -> usize {
         match direction {
             RotationDirection::Clockwise => (self.rot_state + 1) % 4,
-            RotationDirection::CounterClockwise => (self.rot_state - 1) % 4,
+            RotationDirection::CounterClockwise => (self.rot_state + 3) % 4,
         }
     }
 
