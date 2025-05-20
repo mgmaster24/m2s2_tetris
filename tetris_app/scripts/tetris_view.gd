@@ -10,14 +10,14 @@ var rust_game_node = null
 # --- Drawing Data ---
 # Dictionary to map BlockTypes to Godot Colors
 var block_colors = {
-	0: Color(0.1,0.1,0.1,1.0),    # background/empty dark grey
-	1: Color(0.0, 1.0, 1.0, 1.0), # I - cyan
-	2: Color(0.0, 0.0, 1.0, 1.0), # J - blue
-	3: Color(1.0, 0.65, 0.0, 1.0),# L - orange
-	4: Color(1.0, 1.0, 0.0, 1.0), # O - yellow
-	5: Color(0.0, 1.0, 0.0, 1.0), # S - green
-	6: Color(0.65, 0.0, 1.0, 1.0),# T - purple
-	7: Color(1.0, 0.0, 0.0, 1.0), # Z - red
+	7: Color(0.1,0.1,0.1,1.0),    # background/empty dark grey
+	0: Color(0.0, 1.0, 1.0, 1.0), # I - cyan
+	1: Color(0.0, 0.0, 1.0, 1.0), # J - blue
+	2: Color(1.0, 0.65, 0.0, 1.0),# L - orange
+	3: Color(1.0, 1.0, 0.0, 1.0), # O - yellow
+	4: Color(0.0, 1.0, 0.0, 1.0), # S - green
+	5: Color(0.65, 0.0, 1.0, 1.0),# T - purple
+	6: Color(1.0, 0.0, 0.0, 1.0), # Z - red
 }
 
 func _ready() -> void:
@@ -32,7 +32,6 @@ func _ready() -> void:
 	queue_redraw()
 	
 func _process(delta: float) -> void:
-	print(delta)
 	if rust_game_node != null:
 		rust_game_node.process(delta)
 	
@@ -46,6 +45,7 @@ func _draw() -> void:
 	
 	var piece_positions = rust_game_node.get_current_piece_positions()
 	var piece_block_type = rust_game_node.get_current_piece_block_type()
+	print("Current block type:", piece_block_type)
 	draw_piece(piece_positions, piece_block_type)
 	
 	piece_positions = rust_game_node.get_next_piece_positions()

@@ -137,12 +137,6 @@ impl Grid {
 
         num_lines_cleared
     }
-
-    fn empty_cell(&mut self, idx: usize) {
-        self.cells[idx] = Cell {
-            block_type: BlockType::Empty,
-        };
-    }
 }
 
 #[cfg(test)]

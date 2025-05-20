@@ -77,10 +77,6 @@ impl Piece {
             RotationDirection::CounterClockwise => (self.rot_state + 3) % 4,
         }
     }
-
-    fn relative_block_positions_at_rotation(&self, rotation_state: usize) -> [Vector2i32; 4] {
-        self.template.rotations[rotation_state]
-    }
 }
 
 impl PieceShapeTemplate {
@@ -113,14 +109,14 @@ impl BlockType {
 
     pub fn into_i32(self) -> i32 {
         match self {
-            BlockType::Empty => 0,
-            BlockType::I => 1,
-            BlockType::J => 2,
-            BlockType::L => 3,
-            BlockType::O => 4,
-            BlockType::S => 5,
-            BlockType::T => 6,
-            BlockType::Z => 7,
+            BlockType::Empty => 7,
+            BlockType::I => 0,
+            BlockType::J => 1,
+            BlockType::L => 2,
+            BlockType::O => 3,
+            BlockType::S => 4,
+            BlockType::T => 5,
+            BlockType::Z => 6,
         }
     }
 }

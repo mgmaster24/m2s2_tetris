@@ -1,6 +1,10 @@
+// This file defines the static shape data for Tertominoes.
 use crate::piece::{BlockType, PieceShapeTemplate};
 use m2s2_math::Vector2i32;
 
+// --- Tetromino Rotation Data ---
+// Block positions are relative to the top-left (0,0) of a conceptual bounding box.
+// Y is positive downwards, X is positive rightwards
 const O_SHAPE_ROTATIONS: [[Vector2i32; 4]; 4] = [
     [
         Vector2i32::new(0, 0),
@@ -42,16 +46,16 @@ const I_SHAPE_ROTATIONS: [[Vector2i32; 4]; 4] = [
         Vector2i32::new(2, 3),
     ],
     [
-        Vector2i32::new(0, 2),
-        Vector2i32::new(1, 2),
-        Vector2i32::new(2, 2),
-        Vector2i32::new(3, 2),
+        Vector2i32::new(0, 1),
+        Vector2i32::new(1, 1),
+        Vector2i32::new(2, 1),
+        Vector2i32::new(3, 1),
     ],
     [
-        Vector2i32::new(1, 0),
-        Vector2i32::new(1, 1),
-        Vector2i32::new(1, 2),
-        Vector2i32::new(1, 3),
+        Vector2i32::new(2, 0),
+        Vector2i32::new(2, 1),
+        Vector2i32::new(2, 2),
+        Vector2i32::new(2, 3),
     ],
 ];
 
@@ -123,16 +127,16 @@ const S_SHAPE_ROTATIONS: [[Vector2i32; 4]; 4] = [
         Vector2i32::new(1, 2),
     ],
     [
-        Vector2i32::new(1, 1),
-        Vector2i32::new(2, 1),
-        Vector2i32::new(0, 2),
-        Vector2i32::new(1, 2),
-    ],
-    [
         Vector2i32::new(1, 0),
+        Vector2i32::new(2, 0),
         Vector2i32::new(0, 1),
         Vector2i32::new(1, 1),
-        Vector2i32::new(0, 2),
+    ],
+    [
+        Vector2i32::new(0, 0),
+        Vector2i32::new(0, 1),
+        Vector2i32::new(1, 1),
+        Vector2i32::new(1, 2),
     ],
 ];
 
@@ -177,16 +181,16 @@ const Z_SHAPE_ROTATIONS: [[Vector2i32; 4]; 4] = [
         Vector2i32::new(1, 2),
     ],
     [
-        Vector2i32::new(0, 1),
+        Vector2i32::new(0, 0),
+        Vector2i32::new(1, 0),
         Vector2i32::new(1, 1),
-        Vector2i32::new(1, 2),
-        Vector2i32::new(2, 2),
+        Vector2i32::new(2, 1),
     ],
     [
-        Vector2i32::new(1, 0),
-        Vector2i32::new(0, 1),
+        Vector2i32::new(2, 0),
         Vector2i32::new(1, 1),
-        Vector2i32::new(0, 2),
+        Vector2i32::new(2, 1),
+        Vector2i32::new(1, 2),
     ],
 ];
 

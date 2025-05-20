@@ -31,45 +31,35 @@ impl INode for TetrisGameNode {
         }
     }
 
-    fn process(&mut self, delta: f64) {
-        self.process(delta);
-    }
-
     fn input(&mut self, event: Gd<InputEvent>) {
-        if *self.game.state() == GameState::GameOver {
+        let game_state = self.game.state();
+        if *game_state == GameState::GameOver {
             if event.is_action_pressed("ui_accept") {
                 self.game.handle_input(Action::Resume);
             }
-
-            return;
-        }
-
-        let action = if event.is_action_pressed("move_left") {
-            Some(Action::MoveLeft)
-        } else if event.is_action_pressed("move_right") {
-            Some(Action::MoveRight)
-        } else if event.is_action_pressed("move_down") {
-            Some(Action::MoveDown)
-        } else if event.is_action_pressed("hard_drop") {
-            Some(Action::HardDrop)
-        } else if event.is_action_pressed("rotate_clockwise") {
-            Some(Action::RotateCW)
-        } else if event.is_action_pressed("rotate_counter_clockwise") {
-            Some(Action::RotateCCW)
-        } else if event.is_action_pressed("ui_cancel") {
-            if *self.game.state() == GameState::Playing {
+        } else if *game_state == GameState::Playing {
+            let action = if event.is_action_pressed("move_left") {
+                Some(Action::MoveLeft)
+            } else if event.is_action_pressed("move_right") {
+                Some(Action::MoveRight)
+            } else if event.is_action_pressed("move_down") {
+                Some(Action::MoveDown)
+            } else if event.is_action_pressed("hard_drop") {
+                Some(Action::HardDrop)
+            } else if event.is_action_pressed("rotate_clockwise") {
+                Some(Action::RotateCW)
+            } else if event.is_action_pressed("rotate_counter_clockwise") {
+                Some(Action::RotateCCW)
+            } else if event.is_action_pressed("ui_cancel") {
                 Some(Action::Pause)
-            } else if *self.game.state() == GameState::Paused {
-                Some(Action::Resume)
             } else {
                 None
+            };
+            if let Some(action) = action {
+                self.game.handle_input(action);
             }
-        } else {
-            None
-        };
-
-        if let Some(action) = action {
-            self.game.handle_input(action);
+        } else if *game_state == GameState::Paused && event.is_action_pressed("ui_cancel") {
+            self.game.handle_input(Action::Resume);
         }
     }
 }
@@ -153,16 +143,7 @@ impl TetrisGameNode {
 
     #[func]
     fn process(&mut self, delta: f64) {
-        godot_print!(
-            "Game update called. State: {:?}, Timer: {}, Interval: {}",
-            self.game.state(),
-            self.game.grav_timer(),
-            self.game.grav_int()
-        );
-        let was_updated = self.game.update(delta);
-        if !was_updated {
-            godot_print!("Not updated")
-        }
+        self.game.update(delta);
     }
 
     fn get_piece_block_type(&self, piece: &Piece) -> i32 {

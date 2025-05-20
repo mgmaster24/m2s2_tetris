@@ -299,10 +299,6 @@ impl Game {
         self.level = (self.lines_cleared / 10) + 1;
     }
 
-    fn check_game_over(&mut self) {
-        todo!("Implememt");
-    }
-
     fn try_move_down(&mut self) -> bool {
         self.try_move(Vector2i32::new(0, 1))
     }
